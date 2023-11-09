@@ -5,6 +5,27 @@ var cityLat
 var cityLon
 var cityTimeZone
 
+// At page load, call the searchHistoryArray[] and display on the index.html
+document.addEventListener('DOMContentLoaded', function() {
+  // Retrieve data from localStorage
+  // const data = localStorage.getItem('myData');
+  var searchHistoryList = document.getElementById("searchHistoryList")
+  var searchHistoryArray = JSON.parse(localStorage.getItem('searchHistory'))
+
+  // Check if data exists
+  if (searchHistoryArray !== null) {
+    // Loop through arary
+    for (var i = 0; i < searchHistoryArray.length; i++) {
+    // Update HTML element with the retrieved data
+
+      var searchHistoryListItem = document.createElement("li");
+      console.log(searchHistoryArray[i])
+      searchHistoryListItem.textContent = searchHistoryArray[i];
+      searchHistoryList.appendChild(searchHistoryListItem);
+    }
+  }
+});
+
 function handleSearchFormSubmit(event) {
   event.preventDefault();
 
