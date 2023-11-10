@@ -15,7 +15,10 @@ document.addEventListener('DOMContentLoaded', function() {
   // Check if data exists
   if (searchHistoryArray !== null) {
     // Loop through arary
-    for (var i = 0; i < searchHistoryArray.length; i++) {
+
+  // Loop through only the 10 most recent searches to keep list managable
+    // for (var i = 0; i < searchHistoryArray.length; i++) {
+    for (var i = 0; i < 10; i++) {
     // Update HTML element with the retrieved data
 
       var searchHistoryListItem = document.createElement("li");
@@ -51,8 +54,33 @@ function storeHistory(cityName){
     searchHistoryArray = [];
   }
 
+  // else check to see city name value already exists in array
+  // if it does exist, delete if from the array and .push to array
+  // else appent to array
+
+  for (var i = 0; i < searchHistoryArray.length; i++) {
+    if (searchHistoryArray[i] === cityName) {
+      searchHistoryArray.splice(i, 1);
+      i--}
+    }
+
+
+    // function deleteItems(array) {
+    //   for (let i = 0; i < array.length; i++) {
+    //     if (/* check if the item meets the criteria */) {
+    //       array.splice(i, 1); // delete the item at index i
+    //       i--; // adjust the index to account for the removed item
+    //     }
+    //   }
+    // }
+// for each index in array, loop through array
+// compare value in array against cityName
+// if they're the same, use
+
   // Append a new city to the array
-  searchHistoryArray.push(cityName);
+  // Use array.unshift() to add new cityName as first item in array
+  // searchHistoryArray.push(cityName);
+  searchHistoryArray.unshift(cityName);
   console.log(searchHistoryArray)
 
   // Save the updated array back to localStorage
@@ -108,6 +136,44 @@ function getCurrentConditions(cityLat, cityLon){
         console.log (data.current.weather[0].main);
         console.log (data.current.weather[0].icon);
     // }
+    var conditionsIcon = (data.current.weather[0].icon)
+
+    currentDateTime  = (data.current.dt)
+    conditionsIconURL = `https://openweathermap.org/img/wn/${conditionsIcon}.png`
+    currentTemp = (data.current.temp);
+    currentWind = (data.current.wind_speed);
+    currentHumidity =(data.current.humidity);
+
+    console.log(currentDateTime)
+       
+    // format Date and Time
+    const date = new Date(currentDateTime)
+    // const dateOptions = { dateStyle: 'long', timeZone: cityTimeZone} ;
+    // const formattedDate = date.toLocaleDateString('en-US', dateOptions);
+    const formattedDate = dayjs.unix(currentDateTime).format('MMMM DD, YYYY')
+    console.log(formattedDate);
+
+    // Select the HTML elements
+    var dateElement = document.getElementById("day0Date")
+    var conditionsIconElement = document.getElementById("day0Icon")
+    var tempElement = document.getElementById("day0Temp");
+    var windElement = document.getElementById("day0Wind");
+    var humidityElement = document.getElementById("day0Humidity");
+
+//     // Get the image element
+// const image = document.getElementById('myImage');
+
+// // Dynamically set the src URL
+// const imageUrl = 'https://example.com/my-image.jpg';
+// image.setAttribute('src', imageUrl);
+
+// Assign the data values to the HTML elements
+dateElement.innerHTML = "Current Conditions for: "  +formattedDate + " is:";
+conditionsIconElement.setAttribute('src', conditionsIconURL);
+tempElement.innerHTML = "The current temperature is: " +currentTemp + " degrees";
+windElement.innerHTML = "The current wind speed is: " +currentWind + " MPH";
+humidityElement.innerHTML = "The current humidity is: " +currentHumidity + "%";
+
   })
   .catch(error => {
     // Handle any errors that occurred during the request
@@ -141,7 +207,7 @@ function getForecast(cityLat, cityLon, cityTimeZone){
         console.log(i);
     }
     
-    forecastDateTime  = (data.list[0].dt_txt)
+    currentDateTime  = (data.list[0].dt_txt)
     forecastConditionsIconURL = `https://openweathermap.org/img/wn/${conditionsIcon}.png`
     forecastTemp = (data.list[0].main.temp);
     forecastWind = (data.list[0].wind.speed);
@@ -149,7 +215,7 @@ function getForecast(cityLat, cityLon, cityTimeZone){
 
        
     // format Date and Time
-    const date = new Date(forecastDateTime)
+    const date = new Date(currentDateTime)
     const dateOptions = { dateStyle: 'long', timeZone: cityTimeZone} ;
     const formattedDate = date.toLocaleDateString('en-US', dateOptions);
     console.log(formattedDate);
@@ -173,7 +239,7 @@ dateElement.innerHTML = "The forecast for " +formattedDate + " is:";
 conditionsIconElement.setAttribute('src', forecastConditionsIconURL);
 tempElement.innerHTML = "The temperature will be: " +forecastTemp + " degrees";
 windElement.innerHTML = "The wind speed will be: " +forecastWind + " MPH";
-humidityElement.innerHTML = "The humidity will be: " +forecastHumidity + "%";
+humidityElement.innerHTML = "The hummidity will be: " +forecastHumidity + "%";
 
   })
   .catch(error => {

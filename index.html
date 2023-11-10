@@ -36,6 +36,23 @@
             <ul class="list-group list-group-flush" id="searchHistoryList"></ul>
             <div class="col-12 col-md-4 ">
               <a href="./component-card.html" class="btn btn-danger p-3 my-2 w-100">Today's Weather</a>
+              <div class="card-body">
+                <h5 class="card-title">Card title</h5>
+                <p class="card-text">Here is some example text to make up the card's content. Replace it with your own text anytime.</p>
+            </div>
+            <div class="d-flex justify-content-center align-items-center">
+              <img src="https://openweathermap.org/img/wn/10d@2x.png" alt="..." class="img-fluid custom-size" id="day0Icon">
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item" id="day0Date"></li>
+                <li class="list-group-item" id="day0Temp"></li>
+                <li class="list-group-item" id="day0Wind"></li>
+                <li class="list-group-item" id="day0Humidity"></li>
+            </ul>
+            <div class="card-body">
+                <a href="#" class="card-link">Card link</a>
+                <a href="#" class="card-link">Another link</a>
+            </div>
             </div>
             <div class="col-12 col-md-4 ">
               <a href="./component-form.html" class="btn btn-info p-3 my-2 w-100">5 Day Forecast</a>
@@ -73,7 +90,7 @@
       </div>
     </div>
   </main>
-
+  <script src="https://cdn.jsdelivr.net/npm/dayjs@1.10.7/dayjs.min.js"></script>
   <script src="./assets/js/script.js"></script>
 </body>
 
