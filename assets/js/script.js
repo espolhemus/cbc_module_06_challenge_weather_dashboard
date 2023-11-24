@@ -18,15 +18,33 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // Loop through only the 10 most recent searches to keep list managable
     // for (var i = 0; i < searchHistoryArray.length; i++) {
-    for (var i = 0; i < 10; i++) {
+    for (var i = 0; i < searchHistoryArray.length && i < 10; i++) {
     // Update HTML element with the retrieved data
 
       var searchHistoryListItem = document.createElement("li");
       console.log(searchHistoryArray[i])
-      searchHistoryListItem.textContent = searchHistoryArray[i];
-      searchHistoryList.appendChild(searchHistoryListItem);
+ 
+      var a = document.createElement('a');
+
+      a.textContent = searchHistoryArray[i]
+    
+      // Set the href attribute of the <a> element to a JavaScript function call with the value as the parameter
+      a.setAttribute("href", "javascript:getCoordinates('" + searchHistoryArray[i] + "')");
+      // Append the <a> element to the <li> element
+      searchHistoryListItem.appendChild(a);
+      // Append the <li> element to the <ul> element
+      searchHistoryList.appendChild( searchHistoryListItem);
     }
-  }
+  
+    // Append the <a> element to the <li> element
+      // searchHistoryListItem.appendChild(link);
+
+      // searchHistoryList.appendChild(searchHistoryListItem);
+
+    // // Append the <li> element to the <ul> element
+    // ul.appendChild(li);
+    }
+  // }
 });
 
 function handleSearchFormSubmit(event) {
